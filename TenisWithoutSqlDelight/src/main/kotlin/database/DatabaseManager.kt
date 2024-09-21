@@ -18,7 +18,7 @@ class DatabaseManager(
             //Establece la conexión y crea el fichero
             connection = DriverManager.getConnection(config.databaseUrl)
             if (config.databaseInit){
-                val sqlScript = ClassLoader.getSystemResource("database.sql").readText()
+                val sqlScript = ClassLoader.getSystemResource("tables.sql").readText()
                 connection.createStatement().use { statement ->
                     statement.execute(sqlScript)
                 }
