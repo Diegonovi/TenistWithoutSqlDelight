@@ -8,7 +8,6 @@ import org.example.tenist.service.storage.json.TenistStorageJson
 import org.example.tenist.service.storage.xml.TenistStorageXml
 import org.koin.core.annotation.Singleton
 import java.io.File
-import java.nio.file.Path
 
 @Singleton
 class TenistStorageImpl(

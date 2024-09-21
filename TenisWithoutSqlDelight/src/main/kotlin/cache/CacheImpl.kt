@@ -14,38 +14,37 @@ class CacheImpl<K,T> (
 ): Cache<T,K> {
     private val cache = mutableMapOf<K, T>()
 
-    override fun get(key: K): Result<T, CacheError> {
+    override fun get(key: K): T? {
         logger.debug { "Obteniendo valor de la cache" }
         return if (cache.containsKey(key)) {
-            Ok(cache.getValue(key))
+            cache.getValue(key)
         } else {
-            Err(CacheError("No existe el valor en la cache"))
+            return null
         }
     }
 
-    override fun put(key: K, value: T): Result<T, Nothing> {
+    override fun put(key: K, value: T): T {
         logger.debug { "Guardando valor en la cache" }
         if (cache.size >= config.cacheSize && !cache.containsKey(key)) {
             logger.debug { "Eliminando valor de la cache" }
             cache.remove(cache.keys.first())
         }
         cache[key] = value
-        return Ok(value)
+        return value
     }
 
-    override fun remove(key: K): Result<T, CacheError> {
+    override fun remove(key: K): T?{
         logger.debug { "Eliminando valor de la cache" }
         return if (cache.containsKey(key)) {
-            Ok(cache.remove(key)!!)
+            cache.remove(key)
         } else {
-            Err(CacheError("No existe el valor en la cache"))
+            return null
         }
     }
 
-    override fun clear(): Result<Unit, Nothing> {
+    override fun clear() {
         logger.debug { "Limpiando cache" }
         cache.clear()
-        return Ok(Unit)
     }
 
 }

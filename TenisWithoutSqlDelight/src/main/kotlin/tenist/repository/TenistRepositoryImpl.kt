@@ -2,7 +2,6 @@ package org.example.tenist.repository
 
 import org.example.database.DatabaseManager
 import org.example.tenist.mappers.findDexteriry
-import org.example.tenist.mappers.toTenist
 import org.example.tenist.models.Tenist
 import org.koin.core.annotation.Singleton
 import org.lighthousegames.logging.logging

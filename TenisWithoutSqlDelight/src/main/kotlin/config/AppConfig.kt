@@ -1,9 +1,11 @@
 package org.example.config
 
-import database.logger
 import org.koin.core.annotation.Singleton
+import org.lighthousegames.logging.logging
 import java.io.InputStream
 import java.util.*
+
+private val logger = logging()
 
 @Singleton
 /**

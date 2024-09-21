@@ -15,7 +15,7 @@ import java.io.File
 class TenistStorageXmlImpl : TenistStorageXml{
     override fun export(file: File, list: List<Tenist>): Result<Unit, TenistError> {
         try {
-            val xmlString = XML { indent = 4; indentString = "   "}
+            val xmlString = XML { indent = 4; indentString = "   " }
             val data = list.map { it.toTenistDto() }
             file.writeText(xmlString.encodeToString(data))
             return Ok(Unit)

@@ -32,7 +32,6 @@ fun TenistDto.toTenist() : Tenist{
     return Tenist(
         id = this.id,
         name = this.name,
-        age = this.age,
         country =  this.country,
         weight = this.weight,
         height = this.height,
