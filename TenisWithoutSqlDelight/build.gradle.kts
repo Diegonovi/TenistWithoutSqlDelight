@@ -39,6 +39,8 @@ dependencies {
     // Moquito
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.3.1")
     testImplementation("org.mockito:mockito-junit-jupiter:5.12.0")
+    // Driver para la base de datos
+    implementation("org.xerial:sqlite-jdbc:3.45.2.0")
 }
 
 tasks.test {

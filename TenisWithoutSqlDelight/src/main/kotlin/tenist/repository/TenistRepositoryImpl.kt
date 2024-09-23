@@ -23,17 +23,21 @@ class TenistRepositoryImpl(
     override fun create(tenist: Tenist): Tenist? {
         logger.debug { "Intentando añadir eltenista con id: ${tenist.name}" }
         try {
-            val sql = "INSERT INTO Tenist (name,country,weight,height,dominantHand,points,birthDate,createdAt,updatedAt) VALUES(?,?,?,?,?,?,?,?,?,?)"
-            val preparedStatement = db.connection.prepareStatement(sql)
-            preparedStatement.setString(1, tenist.name)
-            preparedStatement.setString(2, tenist.country)
-            preparedStatement.setInt(3, tenist.weight)
-            preparedStatement.setDouble(4, tenist.height)
-            preparedStatement.setString(5, tenist.dominantHand!!.name)
-            preparedStatement.setInt(6, tenist.points)
-            preparedStatement.setString(7,tenist.createdAt.toString())
-            preparedStatement.setString(8, tenist.updatedAt.toString())
+            val sql = "INSERT INTO Tenist (id,name,country,weight,height,dominantHand,points,birthDate,createdAt,updatedAt,isDeleted) VALUES(?,?,?,?,?,?,?,?,?,?,?)"
+            val preparedStatement = db.connection!!.prepareStatement(sql)
+            preparedStatement.setInt(1,tenist.id)
+            preparedStatement.setString(2, tenist.name)
+            preparedStatement.setString(3, tenist.country)
+            preparedStatement.setInt(4, tenist.weight)
+            preparedStatement.setDouble(5, tenist.height)
+            preparedStatement.setString(6, tenist.dominantHand!!.name)
+            preparedStatement.setInt(7, tenist.points)
+            preparedStatement.setString(8,tenist.birthDate.toString())
+            preparedStatement.setString(9,tenist.createdAt.toString())
+            preparedStatement.setString(10, tenist.updatedAt.toString())
+            preparedStatement.setInt(11, if (tenist.isDeleted) 1 else 0)
             preparedStatement.executeUpdate()
+            return tenist
         }catch (e : Exception){
             logger.error { "Error al insertar el tenista: ${e.message}" }
             return null
@@ -49,10 +53,11 @@ class TenistRepositoryImpl(
     override fun delete(id: Int, logical : Boolean): Tenist? {
         logger.debug { "Intentando eliminar el tenista con id: $id" }
         try {
+            if (get(id) == null) return null // Si no existe
             val sql : String
             sql = if (logical) "UPDATE Tenist SET isDeleted=true WHERE id=?"
             else "DELETE FROM Tenist WHERE id=?"
-            val preparedStatement = db.connection.prepareStatement(sql)
+            val preparedStatement = db.connection!!.prepareStatement(sql)
             preparedStatement.setInt(1, id)
             preparedStatement.executeUpdate()
             return get(id)
@@ -71,19 +76,22 @@ class TenistRepositoryImpl(
     override fun update(tenist: Tenist): Tenist? {
         logger.debug { "Intentando actualizar el tenista con id: ${tenist.id}" }
         try {
-            val sql = "UPDATE Tenist SET name=?, country=?, weight=?, height=?, dominantHand=?, points=?, birthDate=?, updatedAt=? WHERE id=?"
-            val preparedStatement = db.connection.prepareStatement(sql)
+            if (get(tenist.id) == null) return null // Si no existe
+            val timestamp = LocalDateTime.now()
+            val sql = "UPDATE Tenist SET name=?, country=?, weight=?, height=?, dominantHand=?, points=?, birthDate=?, isDeleted=?, updatedAt=? WHERE id=?"
+            val preparedStatement = db.connection!!.prepareStatement(sql)
             preparedStatement.setString(1, tenist.name)
             preparedStatement.setString(2, tenist.country)
             preparedStatement.setInt(3, tenist.weight)
             preparedStatement.setDouble(4, tenist.height)
             preparedStatement.setString(5, tenist.dominantHand!!.name)
             preparedStatement.setInt(6, tenist.points)
-            preparedStatement.setString(7, tenist.birthDate.toString())
+            preparedStatement.setString(7,tenist.birthDate.toString())
             preparedStatement.setString(8, tenist.updatedAt.toString())
-            preparedStatement.setInt(9, tenist.id)
+            preparedStatement.setInt(9, if (tenist.isDeleted) 1 else 0)
+            preparedStatement.setInt(10, tenist.id)
             preparedStatement.executeUpdate()
-            return tenist
+            return tenist.copy(updatedAt = timestamp)
         }catch (e: Exception){
             logger.error { "Error al actualizar el tenista: ${e.message}" }
             return null
@@ -99,7 +107,7 @@ class TenistRepositoryImpl(
         logger.debug { "Buscando el tenista con id: $id" }
         try {
             val sql = "SELECT * FROM Tenist WHERE id=?"
-            val preparedStatement = db.connection.prepareStatement(sql)
+            val preparedStatement = db.connection!!.prepareStatement(sql)
             preparedStatement.setInt(1, id)
             val result = preparedStatement.executeQuery()
             if (result.next()){
@@ -133,7 +141,7 @@ class TenistRepositoryImpl(
         try {
             val tenists = mutableListOf<Tenist>()
             val sql = "SELECT * FROM Tenist"
-            val result = db.connection.createStatement().executeQuery(sql)
+            val result = db.connection!!.createStatement().executeQuery(sql)
             while (result.next()){
                 tenists.add(
                     Tenist(
