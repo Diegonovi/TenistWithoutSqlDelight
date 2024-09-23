@@ -36,7 +36,7 @@ class TenistStorageImpl(
      */
     override fun exportToJson(file : File?, list: List<Tenist>): Result<Unit, TenistError> {
         if(file == null) {
-            val newFile = File("data${File.separator}tenistas","tenistas.json")
+            val newFile = File("data","tenistas.json")
             File("data").mkdirs()
             newFile.writeText("")
             return json.export(newFile, list)

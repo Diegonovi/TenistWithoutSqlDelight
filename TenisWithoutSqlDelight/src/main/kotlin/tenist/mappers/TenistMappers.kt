@@ -50,9 +50,9 @@ fun TenistDto.toTenist() : Tenist{
  */
 fun findDexteriry(input : String) : Dexterity? {
     return when (input) {
-        "RIGHTHANDED" -> Dexterity.RIGHTHANDED
-        "LEFTHANDED" -> Dexterity.LEFTHANDED
-        "AMBIDEXTROUS" -> Dexterity.AMBIDEXTROUS
+        "DIESTRO" -> Dexterity.RIGHTHANDED
+        "ZURDO" -> Dexterity.LEFTHANDED
+        "AMBIDIESTRO" -> Dexterity.AMBIDEXTROUS
         else -> null
     }
 }

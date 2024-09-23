@@ -34,8 +34,8 @@ class TenistStorageCsvImpl() : TenistStorageCsv {
     override fun import(file: File): Result<List<Tenist>, TenistError> {
         logger.info {"Importando tenistas desde CSV: ${file.absolutePath}"}
         return try {
-            val lines = file.readLines()
-            if (lines[0].replace(" ", "") == "id,nombre,pais,altura,peso,puntos,mano,fecha_nacimiento") lines.drop(1)
+            var lines = file.readLines()
+            if (lines[0].contains("id")) lines = lines.drop(1)
             Ok(lines.map {
                 val tenist = it.split(",")
                 Tenist(
