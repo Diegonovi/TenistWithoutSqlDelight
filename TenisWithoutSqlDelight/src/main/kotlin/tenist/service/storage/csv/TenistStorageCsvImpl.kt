@@ -24,7 +24,10 @@ class TenistStorageCsvImpl() : TenistStorageCsv {
     override fun export(file: File, list: List<Tenist>): Result<Unit, TenistError> {
         logger.info {"Exportando tenistas a CSV: ${file.absolutePath}"}
         return try {
-            TODO()
+            file.writeText("id,nombre,pais,altura,peso,puntos,mano,fecha_nacimiento\n")
+            list.forEach { tenist ->
+                file.appendText("${tenist.id},${tenist.name},${tenist.country},${tenist.height},${tenist.weight},${tenist.points},${tenist.dominantHand?.name},${tenist.birthDate}\n")
+            }
             Ok(Unit)
         } catch (e: Exception) {
             Err(TenistError.ExportError("Error al exportar los tenistas a CSV: ${e.message}"))

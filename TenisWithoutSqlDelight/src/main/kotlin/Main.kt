@@ -32,7 +32,7 @@ fun main() {
             country = "Spain",
             weight = 85,
             height = 1.85,
-            dominantHand = Dexterity.LEFTHANDED,
+            dominantHand = Dexterity.ZURDO,
             points = 12000,
             birthDate = LocalDate.of(1986, 6, 3)
         ),
@@ -41,7 +41,7 @@ fun main() {
             country = "Switzerland",
             weight = 85,
             height = 1.85,
-            dominantHand = Dexterity.RIGHTHANDED,
+            dominantHand = Dexterity.DIESTRO,
             points = 11000,
             birthDate = LocalDate.of(1981, 8, 8)
         ),
@@ -50,7 +50,7 @@ fun main() {
             country = "Serbia",
             weight = 77,
             height = 1.88,
-            dominantHand = Dexterity.RIGHTHANDED,
+            dominantHand = Dexterity.DIESTRO,
             points = 14000,
             birthDate = LocalDate.of(1987, 5, 22)
         ),
@@ -59,7 +59,7 @@ fun main() {
             country = "USA",
             weight = 70,
             height = 1.75,
-            dominantHand = Dexterity.RIGHTHANDED,
+            dominantHand = Dexterity.DIESTRO,
             points = 8000,
             birthDate = LocalDate.of(1981, 9, 26)
         ),
@@ -68,7 +68,7 @@ fun main() {
             country = "Romania",
             weight = 60,
             height = 1.68,
-            dominantHand = Dexterity.RIGHTHANDED,
+            dominantHand = Dexterity.DIESTRO,
             points = 7000,
             birthDate = LocalDate.of(1991, 9, 27)
         )

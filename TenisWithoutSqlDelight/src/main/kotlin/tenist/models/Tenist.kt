@@ -28,5 +28,5 @@ data class Tenist (
 }
 
 enum class Dexterity {
-    RIGHTHANDED, LEFTHANDED, AMBIDEXTROUS
+    DIESTRO ,ZURDO , AMBIDIESTRO
 }

@@ -1,6 +1,6 @@
 package org.example.tenist.errors
 
-sealed class TenistError (msg : String){
+sealed class TenistError (val msg : String){
     class InvalidTenist(msg : String) : TenistError(msg)
     class TenistAlreadyExists(msg : String) : TenistError(msg)
     class TenistDoesNotExist(msg : String) : TenistError(msg)

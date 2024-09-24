@@ -163,7 +163,7 @@ class TenistRepositoryImplTest {
         country: String = "USA",
         weight: Int = 80,
         height: Double = 1.85,
-        dominantHand: Dexterity = Dexterity.RIGHTHANDED,
+        dominantHand: Dexterity = Dexterity.DIESTRO,
         points: Int = 1000,
         birthDate: LocalDate = LocalDate.of(1990, 1, 1),
         createdAt: LocalDateTime = LocalDateTime.now(),

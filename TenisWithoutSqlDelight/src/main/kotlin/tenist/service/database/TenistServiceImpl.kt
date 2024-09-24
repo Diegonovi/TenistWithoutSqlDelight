@@ -13,7 +13,7 @@ val logger = logging()
 
 @Singleton
 class TenistServiceImpl(
-    private val cache: Cache<Tenist, Int>,
+    private val cache: Cache<Int, Tenist>,
     private val tenistRepository: TenistRepository,
     private val tenistValidator: TenistValidator
 ) : TenistService {
@@ -29,7 +29,7 @@ class TenistServiceImpl(
             .onSuccess {
                 if (cache.get(tenist.id) == null && tenistRepository.get(tenist.id) == null){
                     tenistRepository.create(tenist)?.let {
-                        cache.put(it.id, it)
+                        cache.put(it.id,it)
                         return Ok(it)
                     }
                 }else return Err(TenistError.TenistAlreadyExists("El tenista con ID: ${tenist.id} ya existe"))

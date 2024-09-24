@@ -45,7 +45,7 @@ class TenistStorageJsonImpl : TenistStorageJson {
             val tenists = jsonText.map { it.toTenist() }
             Ok(tenists)
         } catch (e: Exception) {
-            return Err(TenistError.ExportError("No se ha podido exportar el fichero JSON: $e"))
+            return Err(TenistError.ImportError("No se ha podido exportar el fichero JSON: $e"))
         }
     }
 }
