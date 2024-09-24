@@ -17,10 +17,20 @@ class TenistStorageImpl(
 ) : TenistStorage{
 
     /**
+     * Una funcion que sirve para importar un fichero CSV que contenga todos los tenistas que se encuentran
+     * en la lista dada
+     * @param file el fichero que se quiere importar
+     * @return un result que contiene una lista de tenistas en el caso de que se haya realizado correctamente o un error sino
+     **/
+    override fun importFromCsv(file: File): Result<List<Tenist>, TenistError> {
+        return csv.import(file)
+    }
+
+     /**
      * Una funcion que sirve para importar un fichero Json que contenga todos los tenistas que se encuentran
      * en la lista dada
      * @param file el fichero que se quiere importar
-     * @return un result que contiene una lista de tenistas en el caso de que se haya realizado correctamente o
+     * @return un result que contiene una lista de tenistas en el caso de que se haya realizado correctamente o un error sino
      **/
     override fun importFromJson(file: File): Result<List<Tenist>, TenistError> {
         return json.import(file)
