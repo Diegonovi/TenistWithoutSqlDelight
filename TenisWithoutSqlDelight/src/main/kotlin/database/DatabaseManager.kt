@@ -21,14 +21,6 @@ class DatabaseManager(
             if (connection == null) {
                 connection = DriverManager.getConnection(config.databaseUrl)
             }
-            connection = DriverManager.getConnection(config.databaseUrl)
-            if (config.databaseRemoveData) {
-                val query = "DELETE FROM Tenist"
-                connection!!.createStatement().use { statement ->
-                    statement.execute(query)
-                    logger.info{ "Datos eliminados" }
-                }
-            }
             if (config.databaseInit){
                 val sqlScript = ClassLoader.getSystemResource("tables.sql").readText()
                 connection!!.createStatement().use { statement ->
@@ -36,6 +28,14 @@ class DatabaseManager(
                 }
                 logger.info{ "Base de datos creada" }
             }
+            if (config.databaseRemoveData) {
+                val query = "DELETE FROM Tenist"
+                connection!!.createStatement().use { statement ->
+                    statement.execute(query)
+                    logger.info{ "Datos eliminados" }
+                }
+            }
+
         } catch (e: SQLException) {
             logger.error{ "Error conectándose con base de datos: ${e.message}" }
         }
