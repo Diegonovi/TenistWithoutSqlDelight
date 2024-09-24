@@ -11,9 +11,30 @@ import org.example.tenist.service.storage.csv.TenistStorageCsvImpl
 import org.example.tenist.service.storage.json.TenistStorageJsonImpl
 import org.example.tenist.service.storage.xml.TenistStorageXmlImpl
 import org.example.tenist.validator.TenisValidatorImpl
+import java.io.File
 import java.nio.file.Paths
 
 fun main(args: Array<String>) {
+
+    var input : File
+    val output : File? = null
+
+    /*
+    fun validateArgs(args: Array<String>): Boolean {
+        if (!args[0].contains(".csv")) return false
+        try {
+            input = File(args[0])
+        }catch (e : Exception){
+            return false
+        }
+        return true
+    }
+
+    if (args.isEmpty() && !validateArgs(args)) {
+        throw IllegalArgumentException("No se puede iniciar el programa sin un fichero csv")
+    }
+     */
+
     val config = AppConfig()
     val service = TenistServiceImpl(
         Cache<Int,Tenist>(config),
@@ -104,3 +125,4 @@ fun main(args: Array<String>) {
     val bestRankedSpanishTenist = spanishTenists.maxByOrNull { it.points }
     println("\nTenista con mejor ranking de España: ${bestRankedSpanishTenist?.name} con ${bestRankedSpanishTenist?.points} puntos")
 }
+
