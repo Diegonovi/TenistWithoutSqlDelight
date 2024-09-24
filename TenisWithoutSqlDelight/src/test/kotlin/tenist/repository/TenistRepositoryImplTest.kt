@@ -29,7 +29,7 @@ class TenistRepositoryImplTest {
     @BeforeEach
     fun setUp() {
         // Mock the configuration to simulate database settings
-        whenever(config.databaseUrl).thenReturn("jdbc:sqlite:tenist.db")
+        whenever(config.databaseUrl).thenReturn("jdbc:sqlite:test.db")
         whenever(config.databaseInMemory).thenReturn(false)
         whenever(config.databaseInit).thenReturn(true)
         whenever(config.databaseRemoveData).thenReturn(true)

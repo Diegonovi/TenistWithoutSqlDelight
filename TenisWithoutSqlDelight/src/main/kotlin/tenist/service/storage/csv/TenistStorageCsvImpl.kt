@@ -45,7 +45,7 @@ class TenistStorageCsvImpl() : TenistStorageCsv {
                     id = tenist[0].toInt(),
                     name = tenist[1],
                     country = tenist[2],
-                    height = tenist[3].toDoubleOrNull() ?: 0.0,
+                    height = (tenist[3].toDouble() / 100.0),
                     weight = tenist[4].toInt(),
                     points = tenist[5].toIntOrNull() ?: 0,
                     dominantHand = findDexteriry(tenist[6]),

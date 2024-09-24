@@ -13,9 +13,9 @@ val logger = logging()
 
 @Singleton
 class TenistServiceImpl(
-    private val cache: Cache<Int, Tenist>,
-    private val tenistRepository: TenistRepository,
-    private val tenistValidator: TenistValidator
+private val cache: Cache<Int, Tenist>,
+private val tenistRepository: TenistRepository,
+private val tenistValidator: TenistValidator
 ) : TenistService {
 
     /**
@@ -32,8 +32,12 @@ class TenistServiceImpl(
                         cache.put(it.id,it)
                         return Ok(it)
                     }
-                }else return Err(TenistError.TenistAlreadyExists("El tenista con ID: ${tenist.id} ya existe"))
+                }else {
+                    logger.error { "No se pudo crear el tenista con ID: ${tenist.id} porque ya existe en la BBDD" }
+                    return Err(TenistError.TenistAlreadyExists("El tenista con ID: ${tenist.id} ya existe"))
+                }
             }
+        logger.error { "No se pudo crear el tenista con ID: ${tenist.id} porque no es válido" }
         return Err(TenistError.InvalidTenist("El tenista con ID: ${tenist.id} no es válido"))
     }
 
@@ -56,6 +60,7 @@ class TenistServiceImpl(
                 return Ok(Unit)
             }
         }
+        logger.error { "No se pudo eliminar el tenista con ID: ${tenist.id} porque no existe" } // Si no está en ninguna parte
         return Err(TenistError.TenistDoesNotExist("No se pudo eliminar el tenista con ID: ${tenist.id}")) //Si no está en ninguna parte
     }
 
@@ -73,6 +78,7 @@ class TenistServiceImpl(
             cache.put(it.id, it)
             return Ok(it)
         }
+        logger.error { "No se pudo encontrar el tenista con ID: $id" } // Si no está en ninguna parte
         return Err(TenistError.TenistDoesNotExist("No se pudo encontrar el tenista con ID: $id")) // Si no está en ninguna parte
     }
 
@@ -85,6 +91,7 @@ class TenistServiceImpl(
         logger.debug { "Actualizando tenista con ID: ${tenist.id}" }
         tenistValidator.validate(tenist)
             .onFailure {
+                logger.error { "No se pudo actualizar el tenista con ID: ${tenist.id} porque no es válido" }
                 return Err(TenistError.InvalidTenist("El tenista con ID: $tenist no es válido"))
             }
         cache.get(tenist.id)?.let { // Si está en la caché
@@ -101,6 +108,7 @@ class TenistServiceImpl(
                 return Ok(it)
             }
         }
+        logger.error { "No se pudo actualizar el tenista con ID: ${tenist.id} porque no existe" } // Si no está en ninguna parte
         return Err(TenistError.TenistDoesNotExist("El tenista con ID: ${tenist.id} no existe"))
     }
 
